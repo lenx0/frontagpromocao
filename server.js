@@ -28,6 +28,7 @@ app.set('layout', path.join(__dirname, 'views', 'partials', 'layout'));
 
 //Rotas
 app.use('/', require('./rotas'));
+app.use('/search', require('./rotas'));
 
 
 // Servidor WEB
