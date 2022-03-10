@@ -28,10 +28,9 @@ app.set('layout', path.join(__dirname, 'views', 'partials', 'layout'));
 
 //Rotas
 app.use('/', require('./rotas'));
-app.use('/search', require('./rotas'));
 
 
 // Servidor WEB
 app.listen(PORT, () => {
-    console.log(`...Servidor online! Rodando na porta ${PORT}... `)
+    console.log(`Server online on port ${PORT}`)
 });
