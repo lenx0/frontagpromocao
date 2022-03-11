@@ -2,18 +2,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>EJS Is Fun</title>
+    <title>EJS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             padding-top: 50px;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
 
+    <script>
         const _tableList =
             "<table class='table'>" +
             "    <thead>" +
@@ -40,42 +39,41 @@
             "</tr>";
 
     </script>
+
+    <script>
+        function submitSucessAlert() {
+            alert("Sucess!!!")
+        }
+    </script>
     <script>
         const url_base = 'http://localhost:3001/v1/campaign';
-        function listar() {
-            fetch(`${url_base}/622a2eba1d821d770d81238e`).then(response => response.json())
+        function listar(response) {
+            fetch(`${url_base}/622a2eba1d821d770d81238e`)
+                .then(response => response.json())
                 .then(result => {
-                    carregarLista(response);
+                    loadList(response);
                 })
         }
-        function gravar() {
-            fetch(`${url_base}`).then(response => response.json())
-                .then(result => {
-                    gravarItem(item);
-                })
-        }
-        function carregarLista(request) {
-            var conteudoItems = "";
 
-            request.campaign.map(item => {
-
+        function loadList(request) {
+            var itemsContent = "";
+            request.campaign.map(element => {
+            }); (item => {
                 var tableItem = _tableItem
                     .replace("{title}", item.title)
                     .replace("{type}", item.type)
                     .replace("{status}", item.status)
                     .replace("{dateStart}", item.date_start)
-                    .replace("{dateEnd}", item.date_end)
-                    ;
-
-                conteudoItems += tableItem;
+                    .replace("{dateEnd}", item.date_end);
+                itemsContent += tableItem;
             });
             var tableList = _tableList
-                .replace("{items}", conteudoItems)
+                .replace("{items}", itemsContent)
                 ;
 
-            var listaItem = document.getElementById("listaItem");
+            var itemList = document.getElementById("itemList");
 
-            listaItem.innerHTML = tableList;
+            itemList.innerHTML = tableList;
         }
     </script>
 </head>
@@ -162,8 +160,8 @@
         </form>
         <div class="form-group">
             <button onclick="submitSucessAlert()" type="submit" class="btn btn-primary">Limpar</button>
-            <button onclick="listar()" type="submit" class="btn btn-primary">Buscar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button id="btnSave" type="submit" class="btn btn-primary">Salvar</button>
             <button type="submit" class="btn btn-primary">Excluir</button>
         </div>
         <div class="form-group">
@@ -176,13 +174,54 @@
             <textarea id="emailContent" name="emailContent" rows="5" cols="38">
         </textarea>
         </div>
-        <div id="listaItem">
+        <div id="itemList">
         </div>
     </main>
     <script>
-        function submitSucessAlert() {
-            alert("Sucess!!!")
+
+        document.getElementById('btnSave').onclick = () => {
+            console.log('nova campanha')
+
         }
+
+        const newCampaing = () => {
+            const campaignTitleElement = document.getElementById('title')
+        }
+
+        const campaign = {
+            nome: campaignTitleElement.value,
+        }
+
+        const init = {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'aplication/json'
+            },
+            body: JSON.stringifycampaign
+        }
+
+        const response = await fetch('http://localhost:3001/v1/campaign', init)
+        const data = await response.json()
+
+        const containerCampaignElement = document.getElementById('containerCampaign')
+
+        campaignElement = createCampaignElement(item)
+
+        const createCampaignElement = (item) => {
+
+            const template = document.getElementById('campaign-template')
+
+            const campaignElement = document.importNode(template.content, true)
+
+            const itens_campaign = campaignElement.querySelectorAll('span')
+
+            itens_campaign[0].innerText = item.title
+
+        }
+
+        const campaignElement = createCampaignElement(item);
+
+
     </script>
 </body>
 
