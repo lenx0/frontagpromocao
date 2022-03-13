@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>EJS</title>
+    <title>EJS Is Fun</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <style>
@@ -11,8 +11,8 @@
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
     <script>
+
         const _tableList =
             "<table class='table'>" +
             "    <thead>" +
@@ -39,41 +39,101 @@
             "</tr>";
 
     </script>
-
-    <script>
-        function submitSucessAlert() {
-            alert("Sucess!!!")
-        }
-    </script>
     <script>
         const url_base = 'http://localhost:3001/v1/campaign';
-        function listar(response) {
-            fetch(`${url_base}/622a2eba1d821d770d81238e`)
-                .then(response => response.json())
+        function listar() {
+            let response = new XMLHttpRequest();
+            fetch(`${url_base}/622d1e84f1da1f0bf0ff96ca`).then(response => response.json())
                 .then(result => {
-                    loadList(response);
+                    carregarLista(response);
                 })
         }
 
-        function loadList(request) {
-            var itemsContent = "";
-            request.campaign.map(element => {
-            }); (item => {
+        function fazGet(url) {
+            let request = new XMLHttpRequest()
+            request.open("GET", url, false)
+            request.send()
+            return request.responseText
+        }
+
+
+        function fazPost(url, body) {
+            console.log("body=", body)
+            let request = new XMLHttpRequest()
+            request.open("POST", url, true)
+            request.setRequestHeader("Content-type", "application/json")
+            request.send(JSON.stringify(body))
+
+            request.onload = function () {
+                console.log(this.responseText)
+            }
+
+            return request.responseText
+        }
+
+        function cadastraEvento() {
+            event.preventDefault()
+            let url = "http://localhost:3001/v1/campaign/"
+            let title = document.getElementById("inputTitle").value
+            let type = document.getElementById("inputType").value
+            let status = document.getElementById("inputStatus").value
+            let dateStart = document.getElementById("inputdateStart").value
+            let dateEnd = document.getElementById("inputdateEnd").value  
+            let pageHtml = document.getElementById("inputpageHtml").value
+            let emailToSend = document.getElementById("emailToSend").value
+            let host = document.getElementById("inputHost").value
+            let port = document.getElementById("inputPort").value
+            let name = document.getElementById("inputName").value
+            let email = document.getElementById("inputEmail").value
+            let user = document.getElementById("inputUser").value
+            let pass = document.getElementById("inputPass").value
+            
+
+            console.log(title)
+
+            body = {
+                "title": title,
+                "type": type,
+                "status": status,
+                "date_start": dateStart,
+                "date_end": dateEnd,
+                "pageHtml": pageHtml,
+                "emailToSend": emailToSend,
+                "smtp": {
+                    "host": host,
+                    "port": port,
+                    "name": name,
+                    "email": email,
+                    "user": user,
+                    "pass": pass
+                }
+            
+            }
+
+            fazPost(url, body)
+        }
+
+        function carregarLista(request) {
+            var conteudoItems = "";
+
+            request.campaign.map(item => {
+
                 var tableItem = _tableItem
                     .replace("{title}", item.title)
                     .replace("{type}", item.type)
                     .replace("{status}", item.status)
                     .replace("{dateStart}", item.date_start)
-                    .replace("{dateEnd}", item.date_end);
-                itemsContent += tableItem;
+                    .replace("{dateEnd}", item.date_end)
+                    ;
+
+                conteudoItems += tableItem;
             });
             var tableList = _tableList
-                .replace("{items}", itemsContent)
-                ;
+                .replace("{items}", conteudoItems);
 
-            var itemList = document.getElementById("itemList");
+            var listaItem = document.getElementById("listaItem");
 
-            itemList.innerHTML = tableList;
+            listaItem.innerHTML = tableList;
         }
     </script>
 </head>
@@ -97,7 +157,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label for="inputType">Tipo</label>
+                    <label>Tipo</label>
                     <select id="inputType" class="form-control">
                         <option selected="">Escolher...</option>
                         <option>Campanha</option>
@@ -105,7 +165,7 @@
                     </select>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputStatus">Status</label>
+                    <label>Status</label>
                     <select id="inputStatus" class="form-control">
                         <option selected="">Escolher...</option>
                         <option>Ativo</option>
@@ -114,114 +174,73 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="date-start">Início</label><br>
-                <input id="date-start" type="datetime-local">
+                <label>Início</label><br>
+                <input id="inputdateStart" type="datetime-local">
             </div>
             <div class="form-group">
-                <label for="date-end">Termino</label><br>
-                <input id="date-end" type="datetime-local">
+                <label>Termino</label><br>
+                <input id="inputdateEnd" type="datetime-local">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label for="inputHost">Host</label>
+                    <label>Host</label>
                     <input type="title" class="form-control" id="inputHost" placeholder="smtp.office365.com">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label for="inputPort">Porta</label>
+                    <label>Porta</label>
                     <input type="text" class="form-control" id="inputPort" placeholder="Insira a porta">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label for="inputName">Nome</label>
-                    <input type="text" class="form-control" id="inpuName" placeholder="Insira o nome">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Insira o nome">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label for="inputEmail">Email</label>
+                    <label>Email</label>
                     <input type="email" class="form-control" id="inputEmail" placeholder="email@example.com">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label for="inputUser">Usuário</label>
+                    <label>Usuário</label>
                     <input type="text" class="form-control" id="inputUser" placeholder="user@example.com">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label for="inpuPassword">Senha</label>
-                    <input type="text" class="form-control" id="inpuPassword" placeholder="Senha">
+                    <label>Senha</label>
+                    <input type="text" class="form-control" id="inputPass" placeholder="Senha">
                 </div>
             </div>
         </form>
         <div class="form-group">
             <button onclick="submitSucessAlert()" type="submit" class="btn btn-primary">Limpar</button>
-            <button type="submit" class="btn btn-primary">Buscar</button>
-            <button id="btnSave" type="submit" class="btn btn-primary">Salvar</button>
+            <button onclick="listar()" type="submit" class="btn btn-primary">Buscar</button>
+            <button onclick="cadastraEvento()" type="submit" class="btn btn-primary">Salvar</button>
             <button type="submit" class="btn btn-primary">Excluir</button>
         </div>
         <div class="form-group">
-            <label for="pageContent">Conteúdo da página</label><br>
-            <textarea id="pageContent" name="pageContent" rows="5" cols="38">
+            <label>Conteúdo da página</label><br>
+            <textarea id="inputpageHtml" name="inputpageHtml" rows="5" cols="38">
         </textarea>
         </div>
         <div class="form-group">
-            <label for="emailContent">Lista de Emails</label><br>
-            <textarea id="emailContent" name="emailContent" rows="5" cols="38">
+            <label>Lista de Emails</label><br>
+            <textarea id="emailToSend" name="emailToSend" rows="5" cols="38">
         </textarea>
         </div>
-        <div id="itemList">
+        <div id="listaItem">
         </div>
     </main>
     <script>
-
-        document.getElementById('btnSave').onclick = () => {
-            console.log('nova campanha')
-
+        function submitSucessAlert() {
+            alert("Sucess!!!")
         }
-
-        const newCampaing = () => {
-            const campaignTitleElement = document.getElementById('title')
-        }
-
-        const campaign = {
-            nome: campaignTitleElement.value,
-        }
-
-        const init = {
-            method: 'POST',
-            headers: {
-                "Content-Type": 'aplication/json'
-            },
-            body: JSON.stringifycampaign
-        }
-
-        const response = await fetch('http://localhost:3001/v1/campaign', init)
-        const data = await response.json()
-
-        const containerCampaignElement = document.getElementById('containerCampaign')
-
-        campaignElement = createCampaignElement(item)
-
-        const createCampaignElement = (item) => {
-
-            const template = document.getElementById('campaign-template')
-
-            const campaignElement = document.importNode(template.content, true)
-
-            const itens_campaign = campaignElement.querySelectorAll('span')
-
-            itens_campaign[0].innerText = item.title
-
-        }
-
-        const campaignElement = createCampaignElement(item);
-
-
     </script>
 </body>
 

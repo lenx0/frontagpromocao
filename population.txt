@@ -1,5 +1,5 @@
 {
-  "campaign": {
+
     "title": "Promoção de fim de ano",
     "type": "promoção",
     "date_start": "2022-10-26T12:00:00.000Z",
@@ -9,7 +9,6 @@
     "emailToSend": "fulano@outlook.com, teste@altogiro.net teste2@newbeach.com.br",
     "smtp": [
       {
-        "_id": "622a3210d6463731a83df719",
         "host": "office365.com.br",
         "port": "8080",
         "name": "Luiza",
@@ -19,4 +18,4 @@
       }
     ]
   }
-}
+
