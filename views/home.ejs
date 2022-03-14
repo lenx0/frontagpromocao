@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>EJS Is Fun</title>
+    <title>AGLabs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <style>
@@ -42,11 +42,42 @@
     <script>
         const url_base = 'http://localhost:3001/v1/campaign';
         function listar() {
-            let response = new XMLHttpRequest();
-            fetch(`${url_base}/622d1e84f1da1f0bf0ff96ca`).then(response => response.json())
+            fetch(`${url_base}/`)
+                .then(response => response.json())
                 .then(result => {
-                    carregarLista(response);
+                    carregarLista(result);
                 })
+        }
+
+        function buscar() {
+            const titleInput = document.getElementById('inputTitle').value
+            fetch(`${url_base}/find/${titleInput}`)
+                .then(response => response.json())
+                .then(result => {
+                    carregarLista(result);
+                })
+        }
+
+        function carregarRegistro() {
+
+        }
+
+        function limparCampos() {
+            event.preventDefault()
+            let title = document.getElementById("inputTitle").reset()
+            let type = document.getElementById("inputType").value
+            let status = document.getElementById("inputStatus").value
+            let dateStart = document.getElementById("inputateStart").value
+            let dateEnd = document.getElementById("inputdateEnd").value
+            let pageHtml = document.getElementById("inputpageHtml").value
+            let emailToSend = document.getElementById("inputemailToSend").value
+            let host = document.getElementById("inputHost").value
+            let port = document.getElementById("inputPort").value
+            let name = document.getElementById("inputName").value
+            let email = document.getElementById("inputEmail").value
+            let user = document.getElementById("inputUser").value
+            let pass = document.getElementById("inputPass").value
+
         }
 
         function fazGet(url) {
@@ -63,7 +94,6 @@
             request.open("POST", url, true)
             request.setRequestHeader("Content-type", "application/json")
             request.send(JSON.stringify(body))
-
             request.onload = function () {
                 console.log(this.responseText)
             }
@@ -78,7 +108,7 @@
             let type = document.getElementById("inputType").value
             let status = document.getElementById("inputStatus").value
             let dateStart = document.getElementById("inputdateStart").value
-            let dateEnd = document.getElementById("inputdateEnd").value  
+            let dateEnd = document.getElementById("inputdateEnd").value
             let pageHtml = document.getElementById("inputpageHtml").value
             let emailToSend = document.getElementById("emailToSend").value
             let host = document.getElementById("inputHost").value
@@ -87,7 +117,7 @@
             let email = document.getElementById("inputEmail").value
             let user = document.getElementById("inputUser").value
             let pass = document.getElementById("inputPass").value
-            
+
 
             console.log(title)
 
@@ -107,7 +137,7 @@
                     "user": user,
                     "pass": pass
                 }
-            
+
             }
 
             fazPost(url, body)
@@ -115,19 +145,20 @@
 
         function carregarLista(request) {
             var conteudoItems = "";
+            console.log(request)
+            if (request.campaign)
+                request.campaign.map(item => {
 
-            request.campaign.map(item => {
+                    var tableItem = _tableItem
+                        .replace("{title}", item.title)
+                        .replace("{type}", item.type)
+                        .replace("{status}", item.status)
+                        .replace("{dateStart}", item.date_start)
+                        .replace("{dateEnd}", item.date_end)
+                        ;
 
-                var tableItem = _tableItem
-                    .replace("{title}", item.title)
-                    .replace("{type}", item.type)
-                    .replace("{status}", item.status)
-                    .replace("{dateStart}", item.date_start)
-                    .replace("{dateEnd}", item.date_end)
-                    ;
-
-                conteudoItems += tableItem;
-            });
+                    conteudoItems += tableItem;
+                });
             var tableList = _tableList
                 .replace("{items}", conteudoItems);
 
@@ -219,7 +250,7 @@
             </div>
         </form>
         <div class="form-group">
-            <button onclick="submitSucessAlert()" type="submit" class="btn btn-primary">Limpar</button>
+            <button onclick="window.location.reload()" type="reset" class="btn btn-primary">Limpar</button>
             <button onclick="listar()" type="submit" class="btn btn-primary">Buscar</button>
             <button onclick="cadastraEvento()" type="submit" class="btn btn-primary">Salvar</button>
             <button type="submit" class="btn btn-primary">Excluir</button>
@@ -238,6 +269,7 @@
         </div>
     </main>
     <script>
+        listar()
         function submitSucessAlert() {
             alert("Sucess!!!")
         }
