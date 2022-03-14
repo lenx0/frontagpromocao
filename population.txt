@@ -1,21 +1,98 @@
 {
-
-    "title": "Promoção de fim de ano",
-    "type": "promoção",
-    "date_start": "2022-10-26T12:00:00.000Z",
-    "date_end": "2022-12-27T13:00:00.000Z",
+    "title": "Promoção fim de ano",
+    "type": "Promoção",
+    "date_start": "2022-05-26T16:09:37.000Z",
+    "date_end": "2022-6-27T14:10:22.000Z",
     "status": "inativo",
-    "pageHtml": "digitar o conteúdo aqui",
-    "emailToSend": "fulano@outlook.com, teste@altogiro.net teste2@newbeach.com.br",
-    "smtp": [
+    "pageHtml": "Promoção que não acaba mais, aproveite até o dia 27/06/2022!!!",
+    "emailToSend": "jonas@outlook.com, bruno@altogiro.net bianca@newbeach.com.br",
+    "smtp":
+      {
+        "host": "office365.com.br",
+        "port": "7855",
+        "name": "Roberto",
+        "email": "roberto@uol.com.br",
+        "user": "robson009091",
+        "pass": "robibijsd"
+      }
+  },
+
+{
+    "title": "Campanha de Páscoa",
+    "type": "Campanha",
+    "date_start": "2022-07-26T12:09:00.000Z",
+    "date_end": "2022-10-27T13:10:20.000Z",
+    "status": "inativo",
+    "pageHtml": "NÃO PERCA, PROMOÇÃO MAIS QUE ESPERADA!",
+    "emailToSend": "roger567@outlook.com, rogermm2@altogiro.net rog009@newbeach.com.br",
+    "smtp":
       {
         "host": "office365.com.br",
         "port": "8080",
-        "name": "Luiza",
-        "email": "luiza@uol.com.br",
-        "user": "luiza221",
-        "pass": "teste9999"
+        "name": "Roger",
+        "email": "rogVbgdf22@uol.com.br",
+        "user": "rog211",
+        "pass": "ujiolo9090"
       }
-    ]
+  },
+
+  {
+    "title": "Promoção férias infantil",
+    "type": "Promoção",
+    "date_start": "2023-01-26T12:09:00.000Z",
+    "date_end": "2022-2-27T13:10:20.000Z",
+    "status": "ativo",
+    "pageHtml": "Nestas férias, leve suas crianças e aproveite as lojas da alto giro aos arredores pois estarão na promoção!!!",
+    "emailToSend": "rubia@outlook.com, junior@altogiro.net thiago@newbeach.com.br",
+    "smtp":
+      {
+        "host": "office365.com.br",
+        "port": "8050",
+        "name": "Thiago",
+        "email": "thiagofreitas1106@gmail.com",
+        "user": "lenx0",
+        "pass": "senhaTeste!2#"
+      }
+  },
+
+  {
+    "title": "Campanha de arrecadação para o inverno",
+    "type": "Campanha",
+    "date_start": "2022-04-01T16:10:37.000Z",
+    "date_end": "2022-4-30T14:12:22.000Z",
+    "status": "inativo",
+    "pageHtml": "Neste inverno ajudo o próximo doando roupas que já não te servem!!!",
+    "emailToSend": "clover@outlook.com, rick@altogiro.net avril@newbeach.com.br",
+    "smtp":
+      {
+        "host": "office365.com.br",
+        "port": "7000",
+        "name": "Julia",
+        "email": "juh0901@gmail.com",
+        "user": "julinha.0901",
+        "pass": "juju0901lol"
+      }
+  },
+
+  {
+    "title": "Campanha de arrecadação para o inverno",
+    "type": "Campanha",
+    "date_start": "2023-05-10T16:16:37.000Z",
+    "date_end": "2024-7-20T14:15:22.000Z",
+    "status": "inativo",
+    "pageHtml": "Neste inverno ajudo o próximo doando roupas que já não te servem!!!",
+    "emailToSend": "raquel@outlook.com, daryl@altogiro.net zakwylde@newbeach.com.br",
+    "smtp":
+      {
+        "host": "office365.com.br",
+        "port": "7000",
+        "name": "Julia",
+        "email": "daiane.5551@gmail.com",
+        "user": "daihz09",
+        "pass": "dai7091_"
+      }
   }
+
+
+
 
