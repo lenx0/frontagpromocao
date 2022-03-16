@@ -36,7 +36,7 @@
 
                 */
         const _tableList =
-            "<table class='tableList'>" +
+            "<table id='tableList'>" +
             "    <thead>" +
             "        <tr>" +
             "            <th>Titulo</th>" +
@@ -221,20 +221,22 @@
 
         function setarModel(model) {
 
+            console.log(model);
+
             idCampaign = model ? model._id : undefined;
             document.getElementById("inputTitle").value = model ? model.title : "";
             document.getElementById("inputType").value = model ? model.type : "";
-            document.getElementById("inputDateStart").value = model ? model.dateStart : "";
-            document.getElementById("inputDateEnd").value = model ? model.dateEnd : "";
+            document.getElementById("inputDateStart").value = model ? model.date_start : "";
+            document.getElementById("inputDateEnd").value = model ? model.date_end : "";
             document.getElementById("inputStatus").value = model ? model.status : "";
             document.getElementById("inputPageHtml").value = model ? model.pageHtml : "";
-            document.getElementById("inputEmailToSend").value = model ? model.emailtoSend : "";
-            document.getElementById("inputHost").value = model ? model.host : "";
-            document.getElementById("inputPort").value = model ? model.port : "";
-            document.getElementById("inputName").value = model ? model.name : "";
-            document.getElementById("inputEmail").value = model ? model.email : "";
-            document.getElementById("inputUser").value = model ? model.user : "";
-            document.getElementById("inputPass").value = model ? model.pass : "";
+            document.getElementById("inputEmailToSend").value = model ? model.emailToSend : "";
+            document.getElementById("inputHost").value = model ? model.smtp.host : "";
+            document.getElementById("inputPort").value = model ? model.smtp.port : "";
+            document.getElementById("inputName").value = model ? model.smtp.name : "";
+            document.getElementById("inputEmail").value = model ? model.smtp.email : "";
+            document.getElementById("inputUser").value = model ? model.smtp.user : "";
+            document.getElementById("inputPass").value = model ? model.smtp.pass : "";
 
             return model;
 
@@ -255,20 +257,22 @@
             var node = `/`
 
             execRequest("GET", node, null, (json) => {
-                carregarLista(json.campaigns)
+                var objCampaign = JSON.parse(json)
+                console.log(objCampaign)
+                carregarLista(objCampaign.campaign)
             })
         }
 
         function carregarLista(campaigns) {
 
             var tableItems = "";
-
+            console.log(campaigns)
             campaigns?.map(campaign => {
                 var tableItem = _tableItem
                     .replace("{title}", campaign.title)
                     .replace("{type}", campaign.type)
-                    .replace("{dateStart}", campaign.dateStart)
-                    .replace("{dateEnd}", campaign.dateEnd)
+                    .replace("{dateStart}", campaign.date_start)
+                    .replace("{dateEnd}", campaign.date_end)
                     .replace("{status}", campaign.status)
                     .replace("{pageHtml}", campaign.pageHtml)
                     .replace("{emailToSend}", campaign.emailToSend)
@@ -286,8 +290,10 @@
                 .replace("{bodys}", tableItems);
 
             document.getElementById("divList").innerHTML = tableList;
+            if (tableList) {
+                setarListaClick()
+            }
 
-            setarListaClick()
 
         }
 
@@ -296,24 +302,29 @@
 
             var title = document.getElementById("inputTitle").value;
 
-            if (!campaign) {
+            if (!title) {
                 return;
             }
 
-            var campaign = campaign.find(campaign => campaign.title == title);
+            //var campaign = campaign.find(campaign => campaign.title == title);
 
-            if (campaign) {
-                setarModel(campaign);
-            }
+            //if (campaign) {
+            //    setarModel(campaign);
+            //}
 
-            if (!idCampaign) {
-                return
-            }
+            //if (!idCampaign) {
+            //    return
+            //}
 
-            var node = `/${idCampaign}`
+            var node = `/find/${title.replace(" ", "%20")}`
 
             execRequest("GET", node, null, (json) => {
-                setarModel(json.campaign)
+                var objCampaign = JSON.parse(json)
+                console.log(objCampaign)
+                
+                objCampaign?.campaign?.map(item =>{
+                    setarModel(item)
+                })
             })
 
         }
@@ -395,7 +406,7 @@
                 rows[i].onclick = function () {
 
                     var campaign = GetCellValues(this.rowIndex, 0)
-                    document.getElementById("inputTitle").value = title
+                    document.getElementById("inputTitle").value = campaign
                     buscar()
                 }
             }
