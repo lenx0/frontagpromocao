@@ -4,42 +4,67 @@
     <meta charset="UTF-8">
     <title>AGLabs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="../css/styles.css" rel="preload" as="style">
-
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="../css/styles.css">
     <script>
-        const _tableList =
-            "<table class='table'>" +
-            "    <thead>" +
-            "        <tr>" +
-            "            <th scope='col'>Titulo</th>" +
-            "            <th scope='col'>Tipo</th>" +
-            "            <th scope='col'>Status</th>" +
-            "            <th scope='col'>Data Inicial</th>" +
-            "            <th scope='col'>Data Final</th>" +
-            "        </tr>" +
-            "    </thead>" +
-            "    <tbody>" +
-            "{items}" +
-            "    </tbody>" +
+
+        /*const _tableList =
+            "<table id='tableList'>" +
+            "<thead>" +
+            "    <tr>" +
+            "		<th>title</th>" +
+            "		<th>type</th>" +
+            "		<th>status</th>" +
+            "       <th>dateStart</th>" +
+            "       <th>dateEnd</th>" +
+            "	</tr>" +
+            "</thead>" +
+            "<tbody>" +
+            "{bodys}" +
+            "</tbody>" +
             "</table>";
 
         const _tableItem =
+            "    <tr>" +
+            "		<td>{title}</td>" +
+            "		<td>{type}</td>" +
+            "		<td>{status}</td>" +
+            "		<td>{dateStart}</td>" +
+            "		<td>{dateEnd}</td>" +
+            "	</tr>";
+
+                */
+        const _tableList =
+            "<table class='tableList'>" +
+            "    <thead>" +
+            "        <tr>" +
+            "            <th>Titulo</th>" +
+            "            <th>Tipo</th>" +
+            "            <th>Status</th>" +
+            "            <th>Data Inicial</th>" +
+            "            <th>Data Final</th>" +
+            "        </tr>" +
+            "    </thead>" +
+            "    <tbody>" +
+            "{bodys}" +
+            "    </tbody>" +
+            "</table>";
+
+
+        const _tableItem =
             "<tr>" +
-            "    <td scope='row'>{title}</td>" +
+            "    <td>{title}</td>" +
             "    <td>{type}</td>" +
             "    <td>{status}</td>" +
             "    <td>{dateStart}</td>" +
             "    <td>{dateEnd}</td>" +
             "</tr>";
 
-    </script>
-    <script>
-        const url_base = 'http://localhost:3001/v1/campaign';
+
+
+        /*const url_base = 'http://localhost:3001/v1/campaign';
+        
         function listar() {
             fetch(`${url_base}/`)
                 .then(response => response.json())
@@ -48,16 +73,20 @@
                 })
         }
 
+        function carregarItem(response) {
+            idCampaign = response.campaign._id
+            document.getElementById("inputTitle").value = response.campaign.title
+
+        }
+
         function buscar() {
             const titleInput = document.getElementById('inputTitle').value
             fetch(`${url_base}/find/${titleInput}`)
                 .then(response => response.json())
                 .then(result => {
-                    carregarLista(result);
+                    carregarItem(result);
                 })
         }
-
-
 
         function fazGet(url) {
             let request = new XMLHttpRequest()
@@ -65,7 +94,6 @@
             request.send()
             return request.responseText
         }
-
 
         function fazPost(url, body) {
             console.log("body=", body)
@@ -78,6 +106,17 @@
             }
 
             return request.responseText
+        }
+
+        function excluir () {
+            console.log('excluir')
+
+            if (!idCampaign){
+                return;
+            }
+
+            var 
+
         }
 
         function cadastraEvento() {
@@ -96,7 +135,6 @@
             let email = document.getElementById("inputEmail").value
             let user = document.getElementById("inputUser").value
             let pass = document.getElementById("inputPass").value
-
 
             console.log(title)
 
@@ -125,18 +163,17 @@
         function carregarLista(request) {
             var conteudoItems = "";
             console.log(request)
-            if (request.campaign)
-                request.campaign.map(item => {
+            request.campaign.map(item => {
 
-                    var tableItem = _tableItem
-                        .replace("{title}", item.title)
-                        .replace("{type}", item.type)
-                        .replace("{status}", item.status)
-                        .replace("{dateStart}", item.date_start)
-                        .replace("{dateEnd}", item.date_end);
+                var tableItem = _tableItem
+                    .replace("{title}", item.title)
+                    .replace("{type}", item.type)
+                    .replace("{status}", item.status)
+                    .replace("{dateStart}", item.date_start)
+                    .replace("{dateEnd}", item.date_end);
 
-                    conteudoItems += tableItem;
-                });
+                conteudoItems += tableItem;
+            });
             var tableList = _tableList
                 .replace("{items}", conteudoItems);
 
@@ -144,34 +181,256 @@
 
             listaItem.innerHTML = tableList;
         }
+
+        var tabela = document.getElementById("allTable");
+        var linhas = tabela.getElementsByTagName("tr");
+
+        for (var i = 0; i < linhas.length; i++) {
+            var linha = linhas[i];
+            linha.addEventListener("click", function () {
+                //Adicionar ao atual
+                selLinha(this, false); //Selecione apenas um
+                //selLinha(this, true); //Selecione quantos quiser
+            });
+        }*/
+
+        const urlBase = "http://localhost:3001/v1/campaign"
+
+        let idCampaign = undefined;
+
+        function pegarModel() {
+            var model = {
+                title: document.getElementById("inputTitle").value,
+                type: document.getElementById("inputType").value,
+                date_start: document.getElementById("inputDateStart").value,
+                date_end: document.getElementById("inputDateEnd").value,
+                status: document.getElementById("inputStatus").value,
+                pageHtml: document.getElementById("inputPageHtml").value,
+                emailToSend: document.getElementById("inputEmailToSend").value,
+                smtp: {
+                    host: document.getElementById("inputHost").value,
+                    port: document.getElementById("inputPort").value,
+                    name: document.getElementById("inputName").value,
+                    email: document.getElementById("inputEmail").value,
+                    user: document.getElementById("inputUser").value,
+                    pass: document.getElementById("inputPass").value
+                }
+            }
+            return model;
+        }
+
+        function setarModel(model) {
+
+            idCampaign = model ? model._id : undefined;
+            document.getElementById("inputTitle").value = model ? model.title : "";
+            document.getElementById("inputType").value = model ? model.type : "";
+            document.getElementById("inputDateStart").value = model ? model.dateStart : "";
+            document.getElementById("inputDateEnd").value = model ? model.dateEnd : "";
+            document.getElementById("inputStatus").value = model ? model.status : "";
+            document.getElementById("inputPageHtml").value = model ? model.pageHtml : "";
+            document.getElementById("inputEmailToSend").value = model ? model.emailtoSend : "";
+            document.getElementById("inputHost").value = model ? model.host : "";
+            document.getElementById("inputPort").value = model ? model.port : "";
+            document.getElementById("inputName").value = model ? model.name : "";
+            document.getElementById("inputEmail").value = model ? model.email : "";
+            document.getElementById("inputUser").value = model ? model.user : "";
+            document.getElementById("inputPass").value = model ? model.pass : "";
+
+            return model;
+
+        }
+
+        function limpar() {
+            console.log('limpar')
+
+            setarModel(null);
+
+            document.getElementById("divList").innerHTML = "";
+        }
+
+
+        function listar() {
+            console.log('listar')
+
+            var node = `/`
+
+            execRequest("GET", node, null, (json) => {
+                carregarLista(json.campaigns)
+            })
+        }
+
+        function carregarLista(campaigns) {
+
+            var tableItems = "";
+
+            campaigns?.map(campaign => {
+                var tableItem = _tableItem
+                    .replace("{title}", campaign.title)
+                    .replace("{type}", campaign.type)
+                    .replace("{dateStart}", campaign.dateStart)
+                    .replace("{dateEnd}", campaign.dateEnd)
+                    .replace("{status}", campaign.status)
+                    .replace("{pageHtml}", campaign.pageHtml)
+                    .replace("{emailToSend}", campaign.emailToSend)
+                    .replace("{host}", campaign.host)
+                    .replace("{port}", campaign.port)
+                    .replace("{name}", campaign.name)
+                    .replace("{email}", campaign.email)
+                    .replace("{user}", campaign.user)
+                    .replace("{pass}", campaign.pass);
+
+                tableItems += tableItem;
+            })
+
+            var tableList = _tableList
+                .replace("{bodys}", tableItems);
+
+            document.getElementById("divList").innerHTML = tableList;
+
+            setarListaClick()
+
+        }
+
+        function buscar() {
+            console.log('buscar')
+
+            var title = document.getElementById("inputTitle").value;
+
+            if (!campaign) {
+                return;
+            }
+
+            var campaign = campaign.find(campaign => campaign.title == title);
+
+            if (campaign) {
+                setarModel(campaign);
+            }
+
+            if (!idCampaign) {
+                return
+            }
+
+            var node = `/${idCampaign}`
+
+            execRequest("GET", node, null, (json) => {
+                setarModel(json.campaign)
+            })
+
+        }
+
+        function salvar() {
+            console.log('salvar')
+
+            var rest = idCampaign ? "PUT" : "POST";
+
+            var node = idCampaign ? `/${idCampaign}` : "";
+
+            var model = pegarModel()
+
+            execRequest(rest, node, model, (json) => {
+                alert('gravação efetuada com sucesso');
+            })
+        }
+
+        function excluir() {
+            console.log('excluir')
+
+            if (!idCampaign) {
+                return;
+            }
+
+            var node = `/${idCampaign}`;
+
+            execRequest("DELETE", node, null, (json) => {
+                alert('exclusao efetuada com sucesso')
+            })
+        }
+
+        function GetCellValues(rowIndex, colIndex) {
+            var table = document.getElementById('tableList');
+            for (var r = 0, n = table.rows.length; r < n; r++) {
+                for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+                    if (r == rowIndex && c == colIndex) {
+                        return table.rows[r].cells[c].innerHTML;
+                    }
+                }
+            }
+        }
+
+        function execRequest(rest, node, data, action) {
+
+            var site = `${urlBase}${node}`;
+
+            console.log(`${rest} - ${site}`);
+
+            const request = new XMLHttpRequest()
+
+            request.open(rest, site)
+
+            if (data) {
+                console.log("data ->");
+                console.log(data);
+
+                request.setRequestHeader("Content-type", "application/json")
+                request.send(JSON.stringify(data))
+            }
+            else {
+                request.send()
+            }
+
+            request.onload = function () {
+                console.log(this.responseText)
+                action(this.responseText)
+            }
+        }
+
+        function setarListaClick() {
+            if (!document.getElementsByTagName || !document.createTextNode)
+                return;
+
+            var rows = document.getElementById('tableList')
+                .getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+            for (i = 0; i < rows.length; i++) {
+                rows[i].onclick = function () {
+
+                    var campaign = GetCellValues(this.rowIndex, 0)
+                    document.getElementById("inputTitle").value = title
+                    buscar()
+                }
+            }
+        }
+
     </script>
 </head>
 
 <body class="container">
-    <link href="../css/styles.css" rel="preload" as="style">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
     <header>
     </header>
     <main>
-        <div>
-            <h6 class="descricao">projeto desenvolvido por aglabs</h6>
+        <div class="text-center">
+            <img src="https://altogirolabs.s3.us-east-2.amazonaws.com/agcode/assets/images/site/logo-commerce.png"
+                width="150" height="30" />
         </div>
         <div class="jumbotron row-sm-1" align="center">
-            <h1>CAMPANHA ALTO GIRO</h1>
+            <h2>CAMPANHA</h2>
         </div>
-
         <form>
             <div class="form-group">
-                <label>Título</label>
+                <label style="font-size: 16; font-weight: bold">Título</label>
                 <input type="title" class="form-control" id="inputTitle" placeholder="Insira o título">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label>Tipo</label>
+                    <label style="font-size: 16; font-weight: bold">Tipo</label>
                     <select id="inputType" class="form-control">
                         <option selected="">Escolher...</option>
                         <option>Campanha</option>
@@ -179,7 +438,7 @@
                     </select>
                 </div>
                 <div class="form-group col-md-2">
-                    <label>Status</label>
+                    <label style="font-size: 16; font-weight: bold">Status</label>
                     <select id="inputStatus" class="form-control">
                         <option selected="">Escolher...</option>
                         <option>Ativo</option>
@@ -188,73 +447,71 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Início</label><br>
-                <input id="inputdateStart" type="datetime-local">
+                <label style="font-size: 16; font-weight: bold">Início</label><br>
+                <input id="inputDateStart" type="datetime-local">
             </div>
             <div class="form-group">
-                <label>Termino</label><br>
-                <input id="inputdateEnd" type="datetime-local">
+                <label style="font-size: 16; font-weight: bold">Termino</label><br>
+                <input id="inputDateEnd" type="datetime-local">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label>Host</label>
-                    <input type="title" class="form-control" id="inputHost" placeholder="smtp.office365.com">
+                    <label style="font-size: 16; font-weight: bold">Host</label>
+                    <input type="text" class="form-control" id="inputHost" placeholder="smtp.office365.com">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label>Porta</label>
+                    <label style="font-size: 16; font-weight: bold">Porta</label>
                     <input type="text" class="form-control" id="inputPort" placeholder="Insira a porta">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label>Nome</label>
+                    <label style="font-size: 16; font-weight: bold">Nome</label>
                     <input type="text" class="form-control" id="inputName" placeholder="Insira o nome">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label>Email</label>
+                    <label style="font-size: 16; font-weight: bold">Email</label>
                     <input type="email" class="form-control" id="inputEmail" placeholder="email@example.com">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label>Usuário</label>
+                    <label style="font-size: 16; font-weight: bold">Usuário</label>
                     <input type="text" class="form-control" id="inputUser" placeholder="user@example.com">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label>Senha</label>
+                    <label style="font-size: 16; font-weight: bold">Senha</label>
                     <input type="text" class="form-control" id="inputPass" placeholder="Senha">
                 </div>
             </div>
         </form>
         <div class="form-group">
-            <button onclick="window.location.reload()" type="reset" class="btn btn-primary">Limpar</button>
-            <button onclick="buscar()" type="submit" class="btn btn-primary">Buscar</button>
-            <button onclick="cadastraEvento(),submitSucessAlert()" type="submit" class="btn btn-primary">Salvar</button>
-
-            <button onclick="listar()" type="submit" class="btn btn-primary">Listar</button>
-            <button type="submit" class="btn btn-primary">Excluir</button>
+            <button onclick="limpar()" type="button" class="btn btn-primary">Limpar</button>
+            <button onclick="buscar()" type="button" class="btn btn-primary">Buscar</button>
+            <button onclick="salvar()" type="button" class="btn btn-primary">Salvar</button>
+            <button onclick="listar()" type="button" class="btn btn-primary">Listar</button>
+            <button onclick="excluir()" type="button" class="btn btn-danger">Excluir</button>
         </div>
         <div class="form-group">
-            <label>Conteúdo da página</label><br>
-            <textarea id="inputpageHtml" name="inputpageHtml" rows="5" cols="38">
+            <label style="font-size: 16; font-weight: bold">Conteúdo da página</label><br>
+            <textarea id="inputPageHtml" name="inputPageHtml" rows="5" cols="38">
         </textarea>
         </div>
         <div class="form-group">
-            <label>Lista de Emails</label><br>
-            <textarea id="emailToSend" name="emailToSend" rows="5" cols="38">
+            <label style="font-size: 16; font-weight: bold">Lista de Emails</label><br>
+            <textarea id="inputEmailToSend" name="inputEmailToSend" rows="5" cols="38">
         </textarea>
         </div>
-        <div id="listaItem">
+        <div id="divList">
         </div>
     </main>
     <script>
-        listar()
         function submitSucessAlert() {
             alert("Sucess!!!")
         }
