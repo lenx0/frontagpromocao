@@ -1,6 +1,6 @@
 [
   {
-    "title": "Promoção fim de ano",
+    "title": "teste2",
     "type": "Promoção",
     "dateStart": "2022-05-26T16:09:37.000Z",
     "dateEnd": "2022-6-27T14:10:22.000Z",
