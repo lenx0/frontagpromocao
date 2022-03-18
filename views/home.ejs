@@ -258,8 +258,19 @@
             console.log('buscar')
             var title = document.getElementById("inputTitle").value;
             var code = document.getElementById("inputCode").value;
-            if (!title) {
+            var status = document.getElementById("inputStatus").value;
+            if (!title && !status) {
                 var node = `/searchby/${code}`
+                execRequest("GET", node, null, (json) => {
+                    var objCampaign = JSON.parse(json)
+                    console.log(objCampaign)
+                    objCampaign?.campaign?.map(item => {
+                        setarModel(item)
+                    })
+                })
+                return
+            } else if (!title && !code) {
+                var node = `/search/${status}`
                 execRequest("GET", node, null, (json) => {
                     var objCampaign = JSON.parse(json)
                     console.log(objCampaign)
@@ -278,6 +289,7 @@
                 })
             })
         }
+
         function salvar() {
             console.log('salvar')
             var rest = idCampaign ? "PUT" : "POST";
