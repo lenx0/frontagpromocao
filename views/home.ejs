@@ -9,8 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-
-
         /*const _tableList =
             "<table id='tableList'>" +
             "<thead>" +
@@ -27,7 +25,6 @@
             "{bodys}" +
             "</tbody>" +
             "</table>";
-
         const _tableItem =
             "    <tr>" +
             "       <td>{code}</td>" +
@@ -37,10 +34,9 @@
             "		<td>{dateStart}</td>" +
             "		<td>{dateEnd}</td>" +
             "	</tr>";
-
                 */
         const _tableList =
-            "<table style='cursor: pointer'id='tableList' class='table table-striped pe-auto table-bordered table-condensed table-hover'>" +
+            "<table id='tableList' style='cursor: pointer' class='table table-striped pe-auto table-bordered table-condensed table-hover'>" +
             "    <thead>" +
             "        <tr>" +
             "            <th>Código</th>" +
@@ -55,8 +51,6 @@
             "{bodys}" +
             "    </tbody>" +
             "</table>";
-
-
         const _tableItem =
             "<tr>" +
             "    <td>{code}</td>" +
@@ -66,7 +60,6 @@
             "    <td>{dateStart}</td>" +
             "    <td>{dateEnd}</td>" +
             "</tr>";
-
         /*const url_base = 'http://localhost:3001/v1/campaign';
         
         function listar() {
@@ -76,13 +69,10 @@
                     carregarLista(result);
                 })
         }
-
         function carregarItem(response) {
             idCampaign = response.campaign._id
             document.getElementById("inputTitle").value = response.campaign.title
-
         }
-
         function buscar() {
             const titleInput = document.getElementById('inputTitle').value
             fetch(`${url_base}/find/${titleInput}`)
@@ -91,14 +81,12 @@
                     carregarItem(result);
                 })
         }
-
         function fazGet(url) {
             let request = new XMLHttpRequest()
             request.open("GET", url, false)
             request.send()
             return request.responseText
         }
-
         function fazPost(url, body) {
             console.log("body=", body)
             let request = new XMLHttpRequest()
@@ -108,21 +96,15 @@
             request.onload = function () {
                 console.log(this.responseText)
             }
-
             return request.responseText
         }
-
         function excluir () {
             console.log('excluir')
-
             if (!idCampaign){
                 return;
             }
-
             var 
-
         }
-
         function cadastraEvento() {
             event.preventDefault()
             let url = "http://localhost:3001/v1/campaign/"
@@ -139,9 +121,7 @@
             let email = document.getElementById("inputEmail").value
             let user = document.getElementById("inputUser").value
             let pass = document.getElementById("inputPass").value
-
             console.log(title)
-
             body = {
                 "title": title,
                 "type": type,
@@ -158,37 +138,28 @@
                     "user": user,
                     "pass": pass
                 }
-
             }
-
             fazPost(url, body)
         }
-
         function carregarLista(request) {
             var conteudoItems = "";
             console.log(request)
             request.campaign.map(item => {
-
                 var tableItem = _tableItem
                     .replace("{title}", item.title)
                     .replace("{type}", item.type)
                     .replace("{status}", item.status)
                     .replace("{dateStart}", item.date_start)
                     .replace("{dateEnd}", item.date_end);
-
                 conteudoItems += tableItem;
             });
             var tableList = _tableList
                 .replace("{items}", conteudoItems);
-
             var listaItem = document.getElementById("listaItem");
-
             listaItem.innerHTML = tableList;
         }
-
         var tabela = document.getElementById("allTable");
         var linhas = tabela.getElementsByTagName("tr");
-
         for (var i = 0; i < linhas.length; i++) {
             var linha = linhas[i];
             linha.addEventListener("click", function () {
@@ -197,11 +168,8 @@
                 //selLinha(this, true); //Selecione quantos quiser
             });
         }*/
-
         const urlBase = "http://localhost:3001/v1/campaign"
-
         let idCampaign = undefined;
-
         function pegarModel() {
             var model = {
                 code: document.getElementById("inputCode").value,
@@ -223,11 +191,8 @@
             }
             return model;
         }
-
         function setarModel(model) {
-
             console.log(model);
-
             idCampaign = model ? model._id : undefined;
             document.getElementById("inputCode").value = model ? model.code : "";
             document.getElementById("inputTitle").value = model ? model.title : "";
@@ -243,33 +208,23 @@
             document.getElementById("inputEmail").value = model ? model.smtp.email : "";
             document.getElementById("inputUser").value = model ? model.smtp.user : "";
             document.getElementById("inputPass").value = model ? model.smtp.pass : "";
-
             return model;
-
         }
-
         function limpar() {
             console.log('limpar')
-
             setarModel(null);
-
             document.getElementById("divList").innerHTML = "";
         }
-
-
         function listar() {
             console.log('listar')
             var node = `/`
-
             execRequest("GET", node, null, (json) => {
                 var objCampaign = JSON.parse(json)
                 console.log(objCampaign)
                 carregarLista(objCampaign.campaign)
             })
         }
-
         function carregarLista(campaigns) {
-
             var tableItems = "";
             console.log(campaigns)
             campaigns?.map(campaign => {
@@ -280,39 +235,30 @@
                     .replace("{dateStart}", campaign.dateStart)
                     .replace("{dateEnd}", campaign.dateEnd)
                     .replace("{status}", campaign.status);
-
                 tableItems += tableItem;
             })
-
             var tableList = _tableList
                 .replace("{bodys}", tableItems);
-
             document.getElementById("divList").innerHTML = tableList;
             if (tableList) {
                 setarListaClick()
             }
         }
-
         function stringToBase64(value) {
             var result = btoa(value)
             console.log(result)
             return result;
         }
-
         function base64ToString(value) {
             var result = atob(value)
             console.log(result)
             return result;
         }
-
         function buscar() {
             console.log('buscar')
-
             var title = document.getElementById("inputTitle").value;
-
             if (!title) {
                 var node = `/`
-
                 execRequest("GET", node, null, (json) => {
                     var objCampaign = JSON.parse(json)
                     console.log(objCampaign)
@@ -321,9 +267,7 @@
                     })
                 })
             }
-
             var node = `/find/${title.replace(" ", "%20")}`
-
             execRequest("GET", node, null, (json) => {
                 var objCampaign = JSON.parse(json)
                 console.log(objCampaign)
@@ -332,36 +276,25 @@
                 })
             })
         }
-
         function salvar() {
             console.log('salvar')
-
             var rest = idCampaign ? "PUT" : "POST";
-
             var node = idCampaign ? `/${idCampaign}` : "";
-
             var model = pegarModel()
-
-
             execRequest(rest, node, model, (json) => {
                 alert('gravação efetuada com sucesso');
-
             })
         }
-
         function excluir() {
             console.log('excluir')
-
             if (!idCampaign) {
                 return;
             }
             var node = `/${idCampaign}`;
-
             execRequest("DELETE", node, null, (json) => {
                 alert('exclusao efetuada com sucesso')
             })
         }
-
         function GetCellValues(rowIndex, colIndex) {
             var table = document.getElementById('tableList');
             for (var r = 0, n = table.rows.length; r < n; r++) {
@@ -372,34 +305,25 @@
                 }
             }
         }
-
         function execRequest(rest, node, data, action) {
-
             var site = `${urlBase}${node}`;
-
             console.log(`${rest} - ${site}`);
-
             const request = new XMLHttpRequest()
-
             request.open(rest, site)
-
             if (data) {
                 console.log("data ->");
                 console.log(data);
-
                 request.setRequestHeader("Content-type", "application/json")
                 request.send(JSON.stringify(data))
             }
             else {
                 request.send()
             }
-
             request.onload = function () {
                 console.log(this.responseText)
                 action(this.responseText)
             }
         }
-
         function setarListaClick() {
             if (!document.getElementsByTagName || !document.createTextNode)
                 return;
@@ -407,18 +331,16 @@
                 .getElementsByTagName('tbody')[0].getElementsByTagName('tr');
             for (i = 0; i < rows.length; i++) {
                 rows[i].onclick = function () {
-                    var campaign = GetCellValues(this.rowIndex, 0)
-                    document.getElementById("inputCode").value = campaign
+                    var campaign = GetCellValues(this.rowIndex, 1)
+                    document.getElementById('inputTitle').value = campaign
                     buscar()
                 }
             }
         }
-
     </script>
 </head>
 
 <body class="container">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
@@ -529,9 +451,7 @@
         function submitSucessAlert() {
             alert("Sucess!!!")
         }
-
     </script>
-
 </body>
 
 </html>
