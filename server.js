@@ -4,14 +4,14 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 //# PORTA
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 5000;
 
 // Express
 const app = express();
 const router = express.Router();
 
 // Body Parser
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 

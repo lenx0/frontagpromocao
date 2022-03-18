@@ -257,8 +257,9 @@
         function buscar() {
             console.log('buscar')
             var title = document.getElementById("inputTitle").value;
+            var code = document.getElementById("inputCode").value;
             if (!title) {
-                var node = `/`
+                var node = `/searchby/${code}`
                 execRequest("GET", node, null, (json) => {
                     var objCampaign = JSON.parse(json)
                     console.log(objCampaign)
@@ -266,6 +267,7 @@
                         setarModel(item)
                     })
                 })
+                return
             }
             var node = `/find/${title.replace(" ", "%20")}`
             execRequest("GET", node, null, (json) => {
