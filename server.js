@@ -3,6 +3,7 @@ const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const bodyParser = require('body-parser');
 
+
 //# PORTA
 const PORT = process.env.PORT || 5000;
 
@@ -10,13 +11,17 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 const router = express.Router();
 
+
+
 // Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
+
 // Estáticas
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static('public'));
 
 // EJS - Views (HTML)
 app.use(expressLayouts);

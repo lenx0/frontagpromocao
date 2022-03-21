@@ -1,0 +1,115 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+
+<header>
+</header>
+<main>
+    <div class="text-center" style="background-color: rgb(255, 255, 255); padding-top: 20px;">
+        <img src="https://altogirolabs.s3.us-east-2.amazonaws.com/agcode/assets/images/site/logo-commerce.png"
+            width="180" height="35" />
+    </div>
+    <div class="jumbotron row-sm-2" align="center">
+        <h2 style="font-size: 50; color: rgb(51, 49, 49);  font-weight: bold">CAMPANHA</h2>
+    </div>
+    <form>
+        <div class="form-group col-md-1">
+            <label style="font-size: 16; font-weight: bold;">Código</label>
+            <input type="text" class="form-control inputCode" id="inputCode" placeholder="Código">
+        </div>
+        <div class="form-group">
+            <label style="font-size: 16; font-weight: bold">Título</label>
+            <input type="text" class="form-control" id="inputTitle" placeholder="Insira o título" value="asdasdasd">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label style="font-size: 16; font-weight: bold">Tipo</label>
+                <select id="inputType" class="form-control" style="cursor: pointer">
+                    <option selected="">Escolher...</option>
+                    <option>Campanha</option>
+                    <option>Promoção</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label style="font-size: 16; font-weight: bold">Status</label>
+                <select id="inputStatus" class="form-control" style="cursor: pointer">
+                    <option selected="">Escolher...</option>
+                    <option>Ativo</option>
+                    <option>Inativo</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label style="font-size: 16; font-weight: bold">Início</label><br>
+            <input id="inputDateStart" type="datetime-local" style="cursor: pointer">
+        </div>
+        <div class="form-group">
+            <label style="font-size: 16; font-weight: bold">Termino</label><br>
+            <input id="inputDateEnd" type="datetime-local" style="cursor: pointer">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label style="font-size: 16; font-weight: bold">Host</label>
+                <input type="text" class="form-control" id="inputHost" placeholder="smtp.office365.com">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label style="font-size: 16; font-weight: bold">Porta</label>
+                <input type="text" class="form-control" id="inputPort" placeholder="Insira a porta">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label style="font-size: 16; font-weight: bold">Nome</label>
+                <input type="text" class="form-control" id="inputName" placeholder="Insira o nome">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label style="font-size: 16; font-weight: bold">Email</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="email@example.com">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label style="font-size: 16; font-weight: bold">Usuário</label>
+                <input type="text" class="form-control" id="inputUser" placeholder="user@example.com">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label style="font-size: 16; font-weight: bold">Senha</label>
+                <input type="text" class="form-control" id="inputPass" placeholder="Senha">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="button-container" style="margin-top:10px">
+                <button onclick="limpar()" type="button" class="btn btn-primary">Limpar</button>
+                <button onclick="buscar()" type="button" class="btn btn-primary">Buscar</button>
+                <button onclick="salvar()" type="button" class="btn btn-primary">Salvar</button>
+                <button onclick="listar()" type="button" class="btn btn-primary">Listar</button>
+                <button onclick="excluir()" type="button" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label style="font-size: 16; font-weight: bold">Conteúdo da página</label><br>
+            <textarea id="inputPageHtml" name="inputPageHtml" rows="7" cols="60">
+    </textarea>
+        </div>
+        <div class="form-group">
+            <label style="font-size: 16; font-weight: bold">Lista de Emails</label><br>
+            <textarea id="inputEmailToSend" name="inputEmailToSend" rows="7" cols="60">
+    </textarea>
+        </div>
+        <div id="divList">
+        </div>
+</main>
+<script>
+    function submitSucessAlert() {
+        alert("Sucess!!!")
+    }
+    //convTituloMaiusculo()
+    //convToUpper()
+    console.log(pegaValor())
+</script>
