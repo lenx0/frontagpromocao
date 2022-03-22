@@ -35,6 +35,7 @@ app.set('layout', path.join(__dirname, 'views', 'partials', 'layout'));
 app.use('/', require('./rotas'));
 
 
+
 // Servidor WEB
 app.listen(PORT, () => {
     console.log(`Server online on port ${PORT}`)
